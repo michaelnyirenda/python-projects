@@ -1,21 +1,20 @@
-from turtle import Shape, Turtle, Screen, left, register_shape
+from turtle import Screen
+from snake import Snake
+import time
 
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor("black")
 screen.title("Danger Noodle: The Game")
+screen.tracer(0)
 
-segment_pos = [(0,0), (-20, 0), (-40, 0)] # list of segment positions
+snake = Snake()
 
-#3 turtle objects side by side
-for i in segment_pos:
-    segment = Turtle(shape = "square")
-    segment.color("white")
-    segment.setpos(i)
-   
-
-
-
+game_running = True
+while game_running:
+    screen.update()
+    time.sleep(0.1)
+    snake.move()
 
 screen.exitonclick()
 
