@@ -30,17 +30,8 @@ while game_running:
     
     # detect collisions with food 
     if snake.segments[0].distance(food) < 15:
-        print("food collision detected")
+        food.refresh()
 
 screen.exitonclick()
 
 
-# s = Shape("compound")
-# poly1 = ((0,0),(10,-5),(0,10),(-10,-5))
-# s.addcomponent(poly1, "white", "blue")
-# # poly2 = ((0,0),(10,-5),(-10,-5))
-# # s.addcomponent(poly2, "blue", "red")
-
-# register_shape("snake", s)
-# snake =  Turtle(shape = "snake")
-# snake.color = "white"
