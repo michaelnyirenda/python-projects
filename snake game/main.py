@@ -1,6 +1,7 @@
 from turtle import Screen, down
 from snake import Snake
 import time
+from food import Food
 
 # screen setup
 screen = Screen()
@@ -10,6 +11,7 @@ screen.title("Danger Noodle: The Game")
 screen.tracer(0)
 
 snake = Snake()
+food = Food()
 
 # screen listening for key presses
 screen.listen()
@@ -25,6 +27,10 @@ while game_running:
     screen.update()
     time.sleep(0.1)
     snake.move()
+    
+    # detect collisions with food 
+    if snake.segments[0].distance(food) < 15:
+        print("food collision detected")
 
 screen.exitonclick()
 
