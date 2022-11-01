@@ -1,23 +1,25 @@
-# # a paddle will move up and down until it reaches the top or bottom of the screen 
-# from turtle import *
-# x = 350
-# y = 0
-# class Paddle:
-#     def __init__(self):
-        
-#         paddle = Turtle(shape = "square")
-#         paddle.speed(0)
-#         paddle.penup()
-#         paddle.color("white")
-#         paddle.shapesize(stretch_wid=5, stretch_len=1)
-#         paddle.setposition(x, y)
-        
-#     def up():
-#         #change the ycor by 20 pixels
-#         new_y = paddle.sety(y + 20)
-#         paddle.goto(x, new_y)
-        
-#     def down(paddle):
-#         #move paddle by 20 pixels down
-#         new_y = paddle.sety(y - 20)
-#         paddle.goto(x, new_y)
+# a paddle will move up and down until it reaches the top or bottom of the screen 
+from turtle import *
+class Paddle(Turtle):
+    def __init__(self, x, y):
+        super(Paddle, self).__init__()
+        # the paddle that will move up and down
+        self.shape("square")
+        self.speed(0)
+        self.penup()
+        self.color("white")
+        self.shapesize(stretch_wid=5, stretch_len=1)
+        self.setposition(x, y)
+
+
+    def up(self):
+        #change the ycor by 20 pixels
+        new_y = self.ycor() + 20
+        self.goto(self.xcor(), new_y)
+    
+    
+    def down(self):
+        #move paddle by 20 pixels down
+        new_y = self.ycor() - 20
+        self.goto(self.xcor(), new_y)
+  
