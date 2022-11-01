@@ -26,6 +26,24 @@ while game_on:
     time.sleep(0.1)
     screen.update()
     ball.move()
+    
+    # detect collisions with walls and bounces
+    if ball.ycor() > 280 or ball.ycor() < -280:
+        ball.bounce_y()
+    
+    # detect collisions with paddle
+    # if ball.distance(left_paddle) < 10 or ball.distance(right_paddle) < 50:
+    #     ball.bounce_x()
+    if ball.distance(right_paddle) < 50 and ball.xcor() > 320 or ball.distance(left_paddle) < 50 and ball.xcor() < -320:
+        ball.bounce_x()
+    
+    
+    
+    # if ball.xcor() > 380:
+    # add point to scoreboard
+    # if ball.xcor() < -380:
+    # add point to scoreboard
+    
 
 
 
