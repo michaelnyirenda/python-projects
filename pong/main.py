@@ -39,10 +39,10 @@ while game_on:
     
     
     
-    # if ball.xcor() > 380:
+    if ball.xcor() > 380 or ball.xcor() < -380:
+        ball.reset_position()
     # add point to scoreboard
-    # if ball.xcor() < -380:
-    # add point to scoreboard
+   
     
 
 
