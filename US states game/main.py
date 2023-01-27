@@ -17,25 +17,27 @@ pen.hideturtle()
 pen.penup()
 pen.speed('fastest')
 
-# use loop to allow user to keep guessing
-game_on = True
+
+# record the correct guesses in a list
 correct_guesses = []
-score = 0
-while game_on:
-    answer_state = screen.textinput(title = f"{score}/50", prompt="What's another state's name?")
+
+ # use loop to allow user to keep guessing
+while len(correct_guesses) < 50:
+    # update score in the title (0/50)  
+    answer_state = screen.textinput(title = f"{len(correct_guesses)}/50", prompt="What's another state's name?")
     # covert to title case
     answer_state = answer_state.title()
 
     # check if guess is among 50 states
-    if answer_state in data['state'].values:
+    if answer_state in data.state.values:
         # write  correct guess on the map
-        pen.setpos(int(data[data['state'] == answer_state]['x']), int(data[data['state'] == answer_state]['y']))
+        pen.setpos(int(data[data.state == answer_state]['x']), int(data[data.state== answer_state]['y']))
         pen.write(answer_state, align = 'center')
-        # record the correct guesses in a list
-        correct_guesses.append(answer_state)
         # keep track of the number of correct guesses
-        score += 1
-        # update score in the title (0/50)
+        correct_guesses.append(answer_state)
+       
+        
+
         
 
     
