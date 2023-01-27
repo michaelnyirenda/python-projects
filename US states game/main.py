@@ -15,4 +15,4 @@ turtle.shape(image)
 
 # turtle.mainloop()
 
-answer_state = screen.textinput(title="Guess the State", prompt="What's another state's name?").title() 
+answer_state = screen.textinput(title="Guess the State", prompt="What's another state's name?")
