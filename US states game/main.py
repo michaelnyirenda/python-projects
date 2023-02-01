@@ -30,10 +30,7 @@ while len(correct_guesses) < 50:
     
     if answer_state == 'Exit':
         # create a new data frame with the states that were not guessed 
-        states_left_over = []
-        for s in data.state.values:
-            if s not in correct_guesses:
-                states_left_over.append(s)
+        states_left_over = [state for state in data.state.values if state not in correct_guesses]
 
         # create a new csv file with the states that were not guessed
         df = pd.DataFrame(states_left_over)
