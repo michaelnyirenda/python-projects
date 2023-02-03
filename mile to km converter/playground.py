@@ -5,3 +5,8 @@ def add(*args):
     return total
 
 print(add(1,2,3))
+
+def calculate(**kwargs):
+    
+    
+calculate(add=3, multiply=5)
