@@ -31,16 +31,3 @@ input = Entry(width=10)
 input.grid(column = 1,  row = 0) # pack() is used to show the entry on the screen
 
 window.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-window.mainloop()
-
