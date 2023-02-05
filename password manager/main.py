@@ -4,6 +4,17 @@ from tkinter import *
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
+# python file write
+# def save():
+#     website_entry.delete(0, END)
+#     email_username_entry.delete(0, END)
+#     password_entry.delete(0, END)
+#     website_entry.insert(0, website.get())
+#     email_username_entry.insert(0, email_username.get())
+#     password_entry.insert(0, password.get())
+
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
@@ -29,6 +40,7 @@ password.grid(row=3, column=0)
 # entries
 website_entry = Entry(width = 46,)
 website_entry.grid(row=1, column=1,  columnspan=2, sticky='w')
+website_entry.focus()
 
 email_username_entry = Entry(width = 46,)
 email_username_entry.grid(row=2, column=1,  columnspan=2,sticky='w')
