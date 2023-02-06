@@ -1,40 +1,29 @@
 from tkinter import *
 from tkinter import messagebox
 import csv
-import random
+from random import randint, choice, shuffle
+import pyperclip
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
-
-letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
-
-nr_letters= random.randint(8, 12)
-nr_symbols =random.randint(2, 4)
-nr_numbers =random.randint(2, 4)
-
-password_list = []
-
 def generate_password():
-    global password_list
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+    password_list = []
     
-    password_list += [random.choice(letters) for x in range(nr_letters)]
-
-    password_list += [random.choice(symbols) for x in range(nr_symbols)]
-
-    password_list += [random.choice(numbers) for x in range(nr_numbers)]
+    # add letters, symbols and numbers to the list
+    password_list += [choice(letters) for x in range(randint(8, 12))]
+    password_list += [choice(symbols) for x in range(randint(2, 4))]
+    password_list += [choice(numbers) for x in range(randint(2, 4))]
 
     #shuffle only works on a list so that's why we have the list password plus
-    random.shuffle(password_list)
-
-    #now we create a string
-    password = ""
+    shuffle(password_list)
 
     #add the characters of the list to the string
-    for x in password_list:
-        password += x
+    password = "".join(password_list)
         
     password_entry.insert(0, password)
+    pyperclip.copy(password)
     password_list.clear()
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
