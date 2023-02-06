@@ -1,7 +1,41 @@
 from tkinter import *
+from tkinter import messagebox
 import csv
+import random
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+nr_letters= random.randint(8, 12)
+nr_symbols =random.randint(2, 4)
+nr_numbers =random.randint(2, 4)
+
+password_list = []
+
+def generate_password():
+    global password_list
+    
+    password_list += [random.choice(letters) for x in range(nr_letters)]
+
+    password_list += [random.choice(symbols) for x in range(nr_symbols)]
+
+    password_list += [random.choice(numbers) for x in range(nr_numbers)]
+
+    #shuffle only works on a list so that's why we have the list password plus
+    random.shuffle(password_list)
+
+    #now we create a string
+    password = ""
+
+    #add the characters of the list to the string
+    for x in password_list:
+        password += x
+        
+    password_entry.insert(0, password)
+    password_list.clear()
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
     
@@ -9,23 +43,33 @@ password_data = []
 
 def save():
     # get input from entries and append to data list
-    password_data.append(f'{website_entry.get()}')
-    password_data.append(f'{email_username_entry.get()}')
-    password_data.append(f'{password_entry.get()}')
+    website = website_entry.get()
+    email_username = email_username_entry.get()
+    password = password_entry.get()
     
-    # clear entries
-    website_entry.delete(0, END)
-    email_username_entry.delete(0, END)
-    password_entry.delete(0, END)
+    password_data.append(f'{website}')
+    password_data.append(f'{email_username}')
+    password_data.append(f'{password}')
     
-    # write to csv file
-    with open("data.csv", "a", newline='') as data_file:
-        writer = csv.writer(data_file)
-        writer.writerow(password_data)
-    
-    # clear data list
-    password_data.clear()
-
+    if len(password_data) == 0 or len(website) == 0 or len(email_username) == 0:
+        messagebox.showinfo(title="Oops", message="Please don't leave any fields empty!")
+    else:
+        is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email_username} \nPassword: {password} \nIs it ok to save?")
+        messagebox.showinfo(title="Success", message="Your password has been saved!")
+        
+        # clear entries
+        website_entry.delete(0, END)
+        email_username_entry.delete(0, END)
+        password_entry.delete(0, END)
+        
+        # write to csv file
+        if is_ok == True:
+            with open("data.csv", "a", newline='') as data_file:
+                writer = csv.writer(data_file)
+                writer.writerow(password_data)
+            
+            # clear data list
+            password_data.clear()
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -61,11 +105,10 @@ password_entry = Entry(window, width = 28)
 password_entry.grid(row=3, column=1,sticky='w')
 
 # buttons
-generate_button = Button(window, text="New Password")
+generate_button = Button(window, text="New Password", command=generate_password)
 generate_button.grid(row=3, column=2, sticky='w')
 
 add_button = Button(window, text="Add", width=39, command=save)
 add_button.grid(row=4, column=1, columnspan=2, sticky='w')
-
 
 window.mainloop()
