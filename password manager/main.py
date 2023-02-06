@@ -4,12 +4,6 @@ import csv
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
-
-# write to csv file
-header = ["website", "email/username", "password"]
-with open("data.csv", "w", newline='') as data_file:
-    writer = csv.writer(data_file)
-    writer.writerow(header)
     
 password_data = []
 
