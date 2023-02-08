@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
-import csv
 from random import randint, choice, shuffle
 import pyperclip
+import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
@@ -27,38 +27,43 @@ def generate_password():
     password_list.clear()
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
-    
-password_data = []
-
 def save():
     # get input from entries and append to data list
     website = website_entry.get()
     email_username = email_username_entry.get()
     password = password_entry.get()
     
-    password_data.append(f'{website}')
-    password_data.append(f'{email_username}')
-    password_data.append(f'{password}')
+    new_data = {
+       website: {
+              "email": email_username,
+              "password": password,
+           }
+       }
     
-    if len(password_data) == 0 or len(website) == 0 or len(email_username) == 0:
+    if len(password) == 0 or len(website) == 0 or len(email_username) == 0:
         messagebox.showinfo(title="Oops", message="Please don't leave any fields empty!")
     else:
-        is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email_username} \nPassword: {password} \nIs it ok to save?")
-        messagebox.showinfo(title="Success", message="Your password has been saved!")
-        
-        # clear entries
-        website_entry.delete(0, END)
-        email_username_entry.delete(0, END)
-        password_entry.delete(0, END)
-        
-        # write to csv file
-        if is_ok == True:
-            with open("data.csv", "a", newline='') as data_file:
-                writer = csv.writer(data_file)
-                writer.writerow(password_data)
-            
-            # clear data list
-            password_data.clear()
+        # check if file exists
+        try:
+            with open("data.json", "r") as data_file: # open in read mode
+                data = json.load(data_file) # read data from file   
+                
+        # if file doesn't exist, create it        
+        except FileNotFoundError:        
+            with open("data.json", "w") as data_file: # open in write mode
+                json.dump(new_data, data_file, indent=4) # write data to file
+                
+        # if file exists, update it
+        else:
+            data.update(new_data) # update data with new data
+            with open("data.json", "w") as data_file: # open in write mode
+                json.dump(data, data_file, indent=4) # write data to file
+    
+        finally:
+            # clear entries
+            website_entry.delete(0, END)
+            email_username_entry.delete(0, END)
+            password_entry.delete(0, END)
 
 # ---------------------------- UI SETUP ------------------------------- #
 
