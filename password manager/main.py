@@ -25,11 +25,27 @@ def generate_password():
     password_entry.insert(0, password)
     pyperclip.copy(password)
     password_list.clear()
+    
+# ---------------------------- SEARCH ------------------------------- #
+def search():
+    website = website_entry.get().capitalize()
+    try:
+        with open("data.json", "r") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No Data File Found")
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website, message=f"Email: {email} \nPassword: {password}")
+        else:
+            messagebox.showinfo(title="Error", message=f"No details for {website} exists.")
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
     # get input from entries and append to data list
-    website = website_entry.get()
+    website = website_entry.get().capitalize()
     email_username = email_username_entry.get()
     password = password_entry.get()
     
@@ -88,21 +104,24 @@ password = Label(text="Password:")
 password.grid(row=3, column=0)
 
 # entries
-website_entry = Entry(window, width = 46,)
+website_entry = Entry(window, width = 29)
 website_entry.grid(row=1, column=1,  columnspan=2, sticky='w')
 website_entry.focus()
 
 email_username_entry = Entry(window, width = 46,)
 email_username_entry.grid(row=2, column=1,  columnspan=2,sticky='w')
 
-password_entry = Entry(window, width = 28)
+password_entry = Entry(window, width = 29)
 password_entry.grid(row=3, column=1,sticky='w')
 
 # buttons
-generate_button = Button(window, text="New Password", command=generate_password)
+generate_button = Button(window, text="New Password", width=11, command=generate_password)
 generate_button.grid(row=3, column=2, sticky='w')
 
 add_button = Button(window, text="Add", width=39, command=save)
 add_button.grid(row=4, column=1, columnspan=2, sticky='w')
+
+search_button = Button(window, text="Search", width=11, command=search)
+search_button.grid(row=1, column=2, sticky='w')
 
 window.mainloop()
