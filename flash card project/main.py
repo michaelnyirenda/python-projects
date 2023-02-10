@@ -1,7 +1,7 @@
-BACKGROUND_COLOR = "#B1DDC6"
 from tkinter import *
 
-
+# ---------------------------- CONSTANTS ------------------------------- #
+BACKGROUND_COLOR = "#B1DDC6"
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
