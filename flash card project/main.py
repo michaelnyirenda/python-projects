@@ -1,7 +1,17 @@
 from tkinter import *
+import csv
 
 # ---------------------------- CONSTANTS ------------------------------- #
 BACKGROUND_COLOR = "#B1DDC6"
+
+# ---------------------------- FLASH CARDS ------------------------------- #
+
+with open('french_words.csv', mode='r') as csv_file:
+    csv_reader = csv.DictReader(csv_file)
+    for row in csv_reader:
+        print(row["French"], row["English"])
+
+# ---------------------------- WORDS ------------------------------- #
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
