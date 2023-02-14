@@ -1,3 +1,4 @@
+import time
 from tkinter import *
 import pandas as pd
 from random import *
@@ -14,6 +15,15 @@ def press():
     word = choice(words)
     canvas.itemconfig(title, text="French")
     canvas.itemconfig(card_word, text=word["French"])
+    canvas.itemconfig(canvas_image, image=card_front)
+    window.after(3000, flip)
+    
+# ---------------------------- CARD FLIP ------------------------------- #
+def flip():
+    word = choice(words)
+    canvas.itemconfig(title, text="English")
+    canvas.itemconfig(card_word, text=word["English"])
+    canvas.itemconfig(canvas_image, image=card_back)
     
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -24,16 +34,16 @@ canvas = Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0
 
 # card front
 card_front = PhotoImage(file="images/card_front.png")
-canvas.create_image(400, 263, image=card_front)
+card_back = PhotoImage(file="images/card_back.png")
+canvas_image = canvas.create_image(400, 263, image=card_front)
 title = canvas.create_text(400, 150, text="", font=("Arial", 40, "italic"))
-card_word=canvas.create_text(400, 263, text="", font=("Arial", 60, "bold"))
+card_word = canvas.create_text(400, 263, text="", font=("Arial", 60, "bold"))
 canvas.grid(column=0, row=0, columnspan=2)
 
-# # card back 
-# card_back = PhotoImage(file="images/card_back.png")
-# canvas.create_image(400, 263, image=card_back)
-# canvas.create_text(400, 150, text="French", font=("Arial", 40, "italic"))
-# word_back = canvas.create_text(400, 263, text="Word", font=("Arial", 60, "bold"))
+
+# card back 
+# title_back = canvas.create_text(400, 150, text="", font=("Arial", 40, "italic"))
+# card_word_back = canvas.create_text(400, 263, text="", font=("Arial", 60, "bold"))
 # canvas.grid(column=0, row=0, columnspan=2)
 
 
@@ -47,5 +57,6 @@ wrong_button = Button(image=wrong, highlightthickness=0, command = press)
 wrong_button.grid(column=0, row=1)
 
 press()
+
 
 window.mainloop()
