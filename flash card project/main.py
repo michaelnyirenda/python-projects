@@ -1,35 +1,51 @@
-import time
 from tkinter import *
 import pandas as pd
 from random import *
+from os.path import exists
 
 # ---------------------------- CONSTANTS ------------------------------- #
 BACKGROUND_COLOR = "#B1DDC6"
+current_word = {}
+words = {}
 
 # ---------------------------- WORDS ------------------------------- #
-data = pd.read_csv("data/french_words.csv")
-words = data.to_dict(orient="records")
-
+try:
+    data = pd.read_csv("data/words_to_learn.csv")
+except FileNotFoundError:
+    original_data = pd.read_csv("data/french_words.csv")
+    words = original_data.to_dict(orient="records")
+else:
+    words = data.to_dict(orient="records")
+    
 # ---------------------------- FLASH CARDS ------------------------------- #
-def press():
-    word = choice(words)
-    canvas.itemconfig(title, text="French")
-    canvas.itemconfig(card_word, text=word["French"])
+def next_word():
+    global current_word, flip_timer
+    window.after_cancel(flip_timer)
+    current_word = choice(words)
+    canvas.itemconfig(title, text="French", fill = "black")
+    canvas.itemconfig(card_word, text=current_word["French"], fill = "black")
     canvas.itemconfig(canvas_image, image=card_front)
-    window.after(3000, flip)
+    flip_timer = window.after(3000, flip)
     
 # ---------------------------- CARD FLIP ------------------------------- #
 def flip():
-    word = choice(words)
-    canvas.itemconfig(title, text="English")
-    canvas.itemconfig(card_word, text=word["English"])
+    canvas.itemconfig(title, text="English", fill = "white")
+    canvas.itemconfig(card_word, text=current_word["English"], fill = "white")
     canvas.itemconfig(canvas_image, image=card_back)
-    
+        
+# ---------------------------- REMOVE WORD ------------------------------- #
+def remove_word():
+    words.remove(current_word)
+    next_word()
+    updated_data = pd.DataFrame(words)
+    updated_data.to_csv("data/words_to_learn.csv", index=False)
+        
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Flashy")
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
-
+flip_timer = window.after(3000, flip)
+    
 canvas = Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0)
 card_front = PhotoImage(file="images/card_front.png")
 card_back = PhotoImage(file="images/card_back.png")
@@ -40,14 +56,13 @@ canvas.grid(column=0, row=0, columnspan=2)
 
 # Buttons
 correct = PhotoImage(file="images/right.png",)
-correct_button = Button(image=correct, highlightthickness=0, command = press)
+correct_button = Button(image=correct, highlightthickness=0, command = remove_word)
 correct_button.grid(column=1, row=1)
 
 wrong = PhotoImage(file="images/wrong.png",)
-wrong_button = Button(image=wrong, highlightthickness=0, command = press)
+wrong_button = Button(image=wrong, highlightthickness=0, command = next_word)
 wrong_button.grid(column=0, row=1)
 
-press()
-
+next_word()
 
 window.mainloop()
