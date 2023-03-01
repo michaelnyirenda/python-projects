@@ -66,3 +66,5 @@ wrong_button.grid(column=0, row=1)
 next_word()
 
 window.mainloop()
+
+# Path: python-projects/flash card project/data/words_to_learn.csv
