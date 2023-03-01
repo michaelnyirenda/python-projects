@@ -67,4 +67,3 @@ next_word()
 
 window.mainloop()
 
-# Path: python-projects/flash card project/data/words_to_learn.csv
