@@ -3,10 +3,10 @@ from datetime import datetime
 import smtplib
 import time
 
-MY_LAT = -22.560881 # Your latitude
-MY_LONG = -17.065756 # Your longitude
-MY_EMAIL = "swankdotdev@gmail.com"
-MY_PASSWORD = "snbkyochxbroniqa"
+MY_LAT =  # Your latitude
+MY_LONG =  # Your longitude
+MY_EMAIL = # Your email
+MY_PASSWORD = # Your password
 
 def is_iss_overhead():
     # Your position is within +5 or -5 degrees of the ISS position.
@@ -45,7 +45,7 @@ while True:
             connection.login(user=MY_EMAIL, password=MY_PASSWORD)
         connection.sendmail(
                 from_addr=MY_EMAIL, 
-                to_addrs="boxmaster4427@gmail.com", 
+                to_addrs= # recipient email, 
                 msg="Subject:ISS TRACKER\n\ngo outside. the international space station is above you."
                 )
     time.sleep(60)
