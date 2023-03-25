@@ -32,7 +32,6 @@ class QuizUi:
         
         self.window.mainloop()
 
-
     def get_next_question(self):
         self.canvas.config(bg="white")
         if self.quiz.still_has_questions():
@@ -46,18 +45,17 @@ class QuizUi:
 
     def false_pressed(self):
         is_right = self.quiz.check_answer("False")
-        self.give_feedback(is_right)
-        
+        self.give_feedback(is_right)  
         
     def true_pressed(self):
         is_right = self.quiz.check_answer("True")
         self.give_feedback(is_right)
         
-
     def give_feedback(self, is_right):
         if is_right:
-            
             self.canvas.config(bg="green")
         else:
             self.canvas.config(bg="red")
         self.window.after(1000, self.get_next_question)
+        
+
